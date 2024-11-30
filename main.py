@@ -84,6 +84,14 @@ class CameraApp:
         self.canvas.pack(side="left", fill="both", expand=True)
         self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
 
+        # Enable mouse wheel scrolling
+        self.canvas.bind_all("<MouseWheel>", self._on_mouse_wheel)
+
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")),
+        )
+
         # Right Column (Video Feed)
         video_frame = Frame(main_frame, bg=background)
         video_frame.pack(side="left", fill="both", expand=True)
@@ -101,6 +109,9 @@ class CameraApp:
             fg=button_fg,
             font=("Helvetica", 12),
         ).pack(pady=10)
+
+    def _on_mouse_wheel(self, event):
+        self.canvas.yview_scroll(-1 * int(event.delta / 120), "units")
 
     def switch_to_camera(self):
         if self.displaying_image:
