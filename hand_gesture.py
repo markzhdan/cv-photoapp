@@ -6,6 +6,7 @@ from tkinter import Frame, Button, Label, Canvas, Scrollbar
 from PIL import Image, ImageTk
 import threading
 import time
+import os
 
 # Initialize MediaPipe hands and drawing utilities
 mp_hands = mp.solutions.hands
@@ -159,6 +160,9 @@ class CameraApp:
     def take_picture(self):
         if self.current_frame is not None:
             timestamp = time.strftime("%Y%m%d-%H%M%S")
+            if not os.path.exists("photos"):
+                os.mkdir("photos")
+
             filename = f"photos/photo_{timestamp}.jpg"
             cv2.imwrite(filename, self.current_frame)
             print(f"Picture saved as {filename}")
@@ -230,7 +234,7 @@ class CameraApp:
                         # Determine left or right hand
                         hand_type = "Left" if hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x < 0.5 else "Right"
                         cv2.putText(frame, f"{hand_type} Hand", (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                        print("Hand landmarks detected:", hand_landmarks)
+                        #print("Hand landmarks detected:", hand_landmarks)
                         try:
                             # Recognize gestures
                             gesture = recognize_gesture(hand_landmarks)
