@@ -12,6 +12,10 @@ import os
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 
+# Initialize Mediapipe face and drawing utilizites
+mp_face_detection = mp.solutions.face_detection
+mp_drawing = mp.solutions.drawing_utils
+
 # Function to recognize basic gestures
 def recognize_gesture(hand_landmarks):
     thumb_up = False
@@ -46,11 +50,14 @@ def recognize_gesture(hand_landmarks):
     else:
         return "Unknown Gesture"
 
+
 class CameraApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Auto Photo App")
         self.root.geometry("800x500")
+        self.face_count = 0
+        self.face_count_var = tk.StringVar()
 
         # Video capture and processing
         self.cap = cv2.VideoCapture(0)
@@ -91,6 +98,12 @@ class CameraApp:
             bg=background,
             fg="white",
         ).pack(side="left", padx=20)
+
+        # Face Count Label
+
+        self.face_count_var.set(f"Faces Detected: {self.face_count}")
+        face_count_label = Label(root, textvariable=self.face_count_var, font=("Arial", 16))
+        face_count_label.pack()
 
         # Main Content
         main_frame = Frame(self.root)
@@ -211,6 +224,7 @@ class CameraApp:
 
     def process_video(self):
         hands = mp_hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.7)
+        face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.7)
         while self.running:
             if not self.displaying_image:
                 ret, frame = self.cap.read()
@@ -225,6 +239,18 @@ class CameraApp:
 
                 # Perform hand detection
                 results = hands.process(rgb_frame)
+
+                # Perform face detection
+                face_results = face_detection.process(rgb_frame)
+
+                if face_results.detections:
+                    self.face_count = len(face_results.detections)
+                    self.face_count_var.set(f"Faces Detected: {self.face_count}")
+                    for detection in face_results.detections:
+                        mp_drawing.draw_detection(frame, detection)
+                else:
+                    self.face_count_var.set(f"No Faces Detected")
+                cv2.putText(frame, f"Faces: {self.face_count}", (100, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
                 # Draw hand landmarks on the frame
                 if results.multi_hand_landmarks:
