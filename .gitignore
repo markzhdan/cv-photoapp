@@ -1,1 +1,8 @@
 .DS_Store
+/block
+/blocks_old
+/block_textures
+/filters
+/old
+/minecraft
+main_color_seg.py

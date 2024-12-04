@@ -4,6 +4,8 @@ import tkinter as tk
 from tkinter import Frame, Button, Label, Canvas, Scrollbar
 from PIL import Image, ImageTk
 import threading
+import mediapipe as mp
+from google.protobuf.json_format import MessageToDict
 import time
 
 
@@ -13,11 +15,19 @@ class CameraApp:
         self.root.title("Auto Photo App")
         self.root.geometry("800x500")
 
-        # Video capture and processing
-        self.cap = cv2.VideoCapture(0)
-        self.hog = cv2.HOGDescriptor()
-        self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+        # Initialize MediaPipe Hands
+        self.mpHands = mp.solutions.hands
+        self.hands = self.mpHands.Hands(
+            static_image_mode=False,
+            model_complexity=1,
+            min_detection_confidence=0.75,
+            min_tracking_confidence=0.75,
+            max_num_hands=2,
+        )
+        self.mpDraw = mp.solutions.drawing_utils
 
+        # Video capture setup
+        self.cap = cv2.VideoCapture(0)
         self.size = (640, 360)
 
         # Flags and data
@@ -120,34 +130,27 @@ class CameraApp:
 
     def take_picture(self):
         if self.current_frame is not None:
-            timestamp = time.strftime("%Y%m%d-%H%M%S")
-            filename = f"photos/photo_{timestamp}.jpg"
-            cv2.imwrite(filename, self.current_frame)
+            filename = f"photo_{int(time.time())}.jpg"
+            cv2.imwrite(filename, cv2.cvtColor(self.current_frame, cv2.COLOR_RGB2BGR))
             print(f"Picture saved as {filename}")
 
-            # Add the photo path to the list
             self.photo_paths.append(filename)
-
-            # Display the thumbnail in the scrollable area
             self.add_thumbnail(filename)
 
     def add_thumbnail(self, image_path):
-        # Resize image to thumbnail size
         img = Image.open(image_path)
         img.thumbnail((150, 150))
 
         img_tk = ImageTk.PhotoImage(img)
 
-        # Add to frame
         thumbnail_label = Label(
             self.scrollable_frame,
             image=img_tk,
             relief="flat",
         )
-        thumbnail_label.image = img_tk  # Keep a reference to avoid garbage collection
+        thumbnail_label.image = img_tk
         thumbnail_label.pack(pady=5, padx=5)
 
-        # Bind click event to display the full image
         thumbnail_label.bind(
             "<Button-1>", lambda e: self.display_full_image(image_path)
         )
@@ -159,13 +162,6 @@ class CameraApp:
         img_tk = ImageTk.PhotoImage(img)
         self.video_panel.imgtk = img_tk
         self.video_panel.configure(image=img_tk)
-        print(f"Displaying full image: {image_path}")
-
-    def quit_app(self):
-        self.running = False
-        self.cap.release()
-        self.root.destroy()
-        cv2.destroyAllWindows()
 
     def process_video(self):
         while self.running:
@@ -174,28 +170,63 @@ class CameraApp:
                 if not ret:
                     break
 
-                # Flip the frame horizontally
+                # Flip the frame horizontally for a mirrored view
                 frame = cv2.flip(frame, 1)
 
-                # Store the current frame for capturing
-                self.current_frame = frame.copy()
+                # Convert BGR to RGB for MediaPipe
+                imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-                # Resize and process the frame
-                frame = cv2.resize(frame, self.size)
-                boxes, weights = self.hog.detectMultiScale(frame, winStride=(8, 8))
-                boxes = np.array([[x, y, x + w, y + h] for (x, y, w, h) in boxes])
+                # Process the frame with MediaPipe
+                results = self.hands.process(imgRGB)
 
-                for xA, yA, xB, yB in boxes:
-                    cv2.rectangle(frame, (xA, yA), (xB, yB), (0, 255, 0), 2)
+                # Draw hand landmarks and annotate right/left hand
+                if results.multi_hand_landmarks:
+                    for idx, hand_handedness in enumerate(results.multi_handedness):
+                        label = MessageToDict(hand_handedness)["classification"][0][
+                            "label"
+                        ]
+                        hand_landmarks = results.multi_hand_landmarks[idx]
 
-                # Convert PIL image to tkinter image
-                rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                img = Image.fromarray(rgb_frame)
+                        # Draw landmarks
+                        self.mpDraw.draw_landmarks(
+                            frame, hand_landmarks, self.mpHands.HAND_CONNECTIONS
+                        )
+
+                        # Annotate hand label
+                        if label == "Left":
+                            cv2.putText(
+                                frame,
+                                "Left Hand",
+                                (10, 50),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.8,
+                                (0, 255, 0),
+                                2,
+                            )
+                        elif label == "Right":
+                            cv2.putText(
+                                frame,
+                                "Right Hand",
+                                (460, 50),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.8,
+                                (0, 255, 0),
+                                2,
+                            )
+
+                # Convert the frame to RGB for display in tkinter
+                frameRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                img = Image.fromarray(frameRGB)
                 imgtk = ImageTk.PhotoImage(image=img)
 
-                # Update video panel
                 self.video_panel.imgtk = imgtk
                 self.video_panel.configure(image=imgtk)
+
+    def quit_app(self):
+        self.running = False
+        self.cap.release()
+        self.root.destroy()
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":

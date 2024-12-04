@@ -1,0 +1,210 @@
+name,texture_file,red,green,blue,variability,type,image_path
+Acacia Leaves,acacia_leaves.png,86.40234375,85.94921875,85.94921875,76.14323882708055,patterned,block_textures/acacia_leaves.png
+Acacia Log,stripped_acacia_log_top.png,166.12890625,91.00390625,51.62890625,8.90105472997334,solid,block_textures/stripped_acacia_log_top.png
+Acacia Planks,acacia_planks.png,168.1328125,90.37109375,50.2265625,12.776415208427673,solid,block_textures/acacia_planks.png
+Ancient Debris,ancient_debris_top.png,94.8125,66.48046875,58.4375,39.33681818038434,patterned,block_textures/ancient_debris_top.png
+Andesite,polished_andesite.png,132.2578125,134.75390625,133.99609375,20.946703617141015,solid,block_textures/polished_andesite.png
+Barrel,barrel_top_open.png,92.515625,67.5625,34.234375,30.339287716155315,patterned,block_textures/barrel_top_open.png
+Basalt,polished_basalt_side.png,88.51953125,88.24609375,91.51953125,22.687325704456253,solid,block_textures/polished_basalt_side.png
+Beacon,beacon.png,117.8046875,220.9296875,215.1171875,43.39833588371834,patterned,block_textures/beacon.png
+Beehive,beehive_front_honey.png,167.38671875,131.62890625,74.02734375,30.084718696360238,patterned,block_textures/beehive_front_honey.png
+Birch Leaves,birch_leaves.png,73.46875,72.6953125,73.30078125,66.35750720244472,patterned,block_textures/birch_leaves.png
+Birch Planks,birch_planks.png,192.46875,175.29296875,121.2421875,18.456924231134167,solid,block_textures/birch_planks.png
+Black Concrete,black_concrete_powder.png,25.296875,26.7421875,31.9765625,7.807078639323959,solid,block_textures/black_concrete_powder.png
+Black Concrete Powder,black_concrete_powder.png,25.296875,26.7421875,31.9765625,7.807078639323959,solid,block_textures/black_concrete_powder.png
+Black Glazed Terracotta,black_glazed_terracotta.png,67.734375,30.03515625,32.2109375,28.52696054662916,solid,block_textures/black_glazed_terracotta.png
+Black Terracotta,black_terracotta.png,37.21875,22.828125,16.38671875,0.9444258454787123,solid,block_textures/black_terracotta.png
+Black Wool,black_wool.png,20.6015625,21.296875,25.6328125,7.617542704526616,solid,block_textures/black_wool.png
+Blackstone,cracked_polished_blackstone_bricks.png,44.0390625,37.6171875,43.94140625,19.06051712982463,solid,block_textures/cracked_polished_blackstone_bricks.png
+Blast Furnace,blast_furnace_front.png,107.58203125,107.6484375,107.26171875,39.686600257320144,patterned,block_textures/blast_furnace_front.png
+Blue Concrete,blue_concrete.png,44.5390625,46.5390625,143.421875,0.6034339553027513,solid,block_textures/blue_concrete.png
+Blue Concrete Powder,blue_concrete_powder.png,70.23828125,73.265625,166.83203125,6.756093764181169,solid,block_textures/blue_concrete_powder.png
+Blue Glazed Terracotta,blue_glazed_terracotta.png,47.453125,64.64453125,139.37109375,35.93425911309062,patterned,block_textures/blue_glazed_terracotta.png
+Blue Terracotta,light_blue_terracotta.png,113.484375,108.53125,137.9921875,1.488419954151695,solid,block_textures/light_blue_terracotta.png
+Bone Block,bone_block_side.png,229.44921875,225.91015625,207.796875,4.794564425216976,solid,block_textures/bone_block_side.png
+Bookshelf,bookshelf.png,117.4296875,94.56640625,59.8203125,50.7435628541127,patterned,block_textures/bookshelf.png
+Bricks,cracked_polished_blackstone_bricks.png,44.0390625,37.6171875,43.94140625,19.06051712982463,solid,block_textures/cracked_polished_blackstone_bricks.png
+Brown Concrete,brown_concrete_powder.png,125.53515625,84.84765625,53.86328125,7.376272019165842,solid,block_textures/brown_concrete_powder.png
+Brown Concrete Powder,brown_concrete_powder.png,125.53515625,84.84765625,53.86328125,7.376272019165842,solid,block_textures/brown_concrete_powder.png
+Brown Glazed Terracotta,brown_glazed_terracotta.png,119.96875,106.24609375,85.9453125,43.08764115782225,patterned,block_textures/brown_glazed_terracotta.png
+Brown Mushroom Block,brown_mushroom_block.png,149.3359375,111.7890625,81.45703125,2.7489354809259523,solid,block_textures/brown_mushroom_block.png
+Brown Terracotta,brown_terracotta.png,77.234375,51.1796875,35.703125,1.3236438241000217,solid,block_textures/brown_terracotta.png
+Brown Wool,brown_wool.png,114.234375,71.609375,40.5859375,7.736612687725777,solid,block_textures/brown_wool.png
+Cactus,cactus_side.png,78.8515625,115.86328125,40.34765625,37.48455977865595,patterned,block_textures/cactus_side.png
+Calcite,calcite.png,223.47265625,224.46484375,220.6640625,19.320980253731427,solid,block_textures/calcite.png
+Cartography Table,cartography_table_side1.png,70.49609375,50.34765625,34.34375,37.80150531783954,patterned,block_textures/cartography_table_side1.png
+Carved Pumpkin,carved_pumpkin.png,150.16796875,84.25,17.265625,47.48264485801683,patterned,block_textures/carved_pumpkin.png
+Cauldron,cauldron_bottom.png,13.28125,13.28125,14.640625,19.748785695729524,solid,block_textures/cauldron_bottom.png
+Chiseled Deepslate,chiseled_deepslate.png,54.296875,54.3203125,54.8828125,16.10266912604645,solid,block_textures/chiseled_deepslate.png
+Chiseled Nether Bricks,chiseled_nether_bricks.png,47.4375,23.703125,28.19921875,10.796667147441292,solid,block_textures/chiseled_nether_bricks.png
+Chiseled Polished Blackstone,chiseled_polished_blackstone.png,53.9765625,48.6640625,56.8125,20.00401147978582,solid,block_textures/chiseled_polished_blackstone.png
+Chiseled Quartz Block,chiseled_quartz_block.png,231.86328125,226.86328125,218.00390625,8.62583697349626,solid,block_textures/chiseled_quartz_block.png
+Chiseled Red Sandstone,chiseled_red_sandstone.png,183.21484375,96.94140625,27.50390625,15.076677504786042,solid,block_textures/chiseled_red_sandstone.png
+Chiseled Sandstone,chiseled_sandstone.png,216.22265625,202.984375,155.41796875,19.479478769404455,solid,block_textures/chiseled_sandstone.png
+Chiseled Stone Bricks,chiseled_stone_bricks.png,119.78125,118.90625,119.78125,22.59423281116042,solid,block_textures/chiseled_stone_bricks.png
+Clay,clay.png,160.6796875,166.4609375,179.4453125,7.646179992413845,solid,block_textures/clay.png
+Coarse Dirt,coarse_dirt.png,119.4453125,85.6015625,59.3984375,25.32061245514014,solid,block_textures/coarse_dirt.png
+Cobbled Deepslate,cobbled_deepslate.png,77.2734375,77.2734375,80.609375,20.413165017255206,solid,block_textures/cobbled_deepslate.png
+Cobblestone,cobblestone.png,127.7890625,127.3046875,127.59765625,29.407042222270444,solid,block_textures/cobblestone.png
+Composter,composter_bottom.png,116.6171875,71.9921875,32.3671875,17.252990670341944,solid,block_textures/composter_bottom.png
+Copper Ore,deepslate_copper_ore.png,92.15234375,93.12109375,89.26953125,29.946335313123864,solid,block_textures/deepslate_copper_ore.png
+Cracked Deepslate Bricks,cracked_deepslate_bricks.png,64.98046875,64.8984375,65.25,22.644678300194105,solid,block_textures/cracked_deepslate_bricks.png
+Cracked Deepslate Tiles,cracked_deepslate_tiles.png,52.62890625,52.51171875,52.74609375,14.812868316844108,solid,block_textures/cracked_deepslate_tiles.png
+Cracked Nether Bricks,cracked_nether_bricks.png,40.37109375,20.03515625,23.95703125,9.75403151734703,solid,block_textures/cracked_nether_bricks.png
+Cracked Polished Blackstone Bricks,cracked_polished_blackstone_bricks.png,44.0390625,37.6171875,43.94140625,19.06051712982463,solid,block_textures/cracked_polished_blackstone_bricks.png
+Cracked Stone Bricks,cracked_stone_bricks.png,118.32421875,117.66015625,118.32421875,18.939170109945845,solid,block_textures/cracked_stone_bricks.png
+Crafting Table,crafting_table_top.png,119.78125,73.2421875,42.4453125,37.78705023383813,patterned,block_textures/crafting_table_top.png
+Crimson Nylium,crimson_nylium.png,130.9375,31.4296875,31.45703125,21.787634890394248,solid,block_textures/crimson_nylium.png
+Crimson Planks,crimson_planks.png,101.03515625,48.78125,70.56640625,17.123089421000966,solid,block_textures/crimson_planks.png
+Crimson Stem,stripped_crimson_stem_top.png,121.73828125,56.3125,82.5859375,10.630429973006551,solid,block_textures/stripped_crimson_stem_top.png
+Crying Obsidian,crying_obsidian.png,32.5859375,10.08203125,60.4453125,36.9294113255784,patterned,block_textures/crying_obsidian.png
+Cut Copper,weathered_cut_copper.png,109.37109375,145.3671875,107.53125,21.443050690736527,solid,block_textures/weathered_cut_copper.png
+Cut Sandstone,cut_sandstone.png,217.80859375,206.4453125,159.8125,16.17171702097205,solid,block_textures/cut_sandstone.png
+Cyan Concrete,cyan_concrete.png,21.4453125,119.21875,136.1875,0.684401891669788,solid,block_textures/cyan_concrete.png
+Cyan Concrete Powder,cyan_concrete_powder.png,36.6484375,147.9765625,157.16015625,7.261533727937355,solid,block_textures/cyan_concrete_powder.png
+Cyan Glazed Terracotta,cyan_glazed_terracotta.png,52.25,118.71875,125.33203125,49.425879638197614,patterned,block_textures/cyan_glazed_terracotta.png
+Cyan Terracotta,cyan_terracotta.png,86.71484375,91.01171875,91.00390625,1.9293419691857252,solid,block_textures/cyan_terracotta.png
+Dark Prismarine,dark_prismarine.png,51.86328125,91.63671875,75.94921875,16.449324191819613,solid,block_textures/dark_prismarine.png
+Deepslate,deepslate_copper_ore.png,92.15234375,93.12109375,89.26953125,29.946335313123864,solid,block_textures/deepslate_copper_ore.png
+Deepslate Bricks,cracked_deepslate_bricks.png,64.98046875,64.8984375,65.25,22.644678300194105,solid,block_textures/cracked_deepslate_bricks.png
+Deepslate Diamond Ore,deepslate_diamond_ore.png,83.34765625,106.42578125,106.9375,42.688717981074355,patterned,block_textures/deepslate_diamond_ore.png
+Deepslate Emerald Ore,deepslate_emerald_ore.png,78.44140625,104.4609375,87.7890625,42.4226276313235,patterned,block_textures/deepslate_emerald_ore.png
+Deepslate Redstone Ore,deepslate_redstone_ore.png,104.71484375,73.30078125,74.82421875,38.48810240487817,patterned,block_textures/deepslate_redstone_ore.png
+Diamond Ore,deepslate_diamond_ore.png,83.34765625,106.42578125,106.9375,42.688717981074355,patterned,block_textures/deepslate_diamond_ore.png
+Diorite,diorite.png,188.71875,188.453125,188.98046875,34.67082190980516,patterned,block_textures/diorite.png
+Dirt,dirt_path_top.png,148.29296875,121.6953125,65.328125,7.860450553898157,solid,block_textures/dirt_path_top.png
+Dispenser,dispenser_front_vertical.png,98.55859375,97.92578125,97.92578125,31.76647342340433,patterned,block_textures/dispenser_front_vertical.png
+Dripstone Block,dripstone_block.png,134.453125,107.5546875,92.515625,17.673572385836618,solid,block_textures/dripstone_block.png
+Dropper,dropper_front_vertical.png,97.671875,96.9609375,96.9609375,31.871970115761332,patterned,block_textures/dropper_front_vertical.png
+Emerald Ore,deepslate_emerald_ore.png,78.44140625,104.4609375,87.7890625,42.4226276313235,patterned,block_textures/deepslate_emerald_ore.png
+Exposed Copper,exposed_copper.png,161.078125,125.703125,103.93359375,17.016223735610723,solid,block_textures/exposed_copper.png
+Farmland,farmland.png,143.17578125,102.54296875,70.76953125,23.516087758778735,solid,block_textures/farmland.png
+Flowering Azalea Leaves,flowering_azalea_leaves.png,79.734375,88.9609375,48.73828125,50.20621227893787,patterned,block_textures/flowering_azalea_leaves.png
+Furnace,blast_furnace_front.png,107.58203125,107.6484375,107.26171875,39.686600257320144,patterned,block_textures/blast_furnace_front.png
+Gilded Blackstone,gilded_blackstone.png,55.60546875,42.93359375,38.33203125,31.612531683070216,patterned,block_textures/gilded_blackstone.png
+Glass,lime_stained_glass.png,127.0,204.0,25.0,0.0,solid,block_textures/lime_stained_glass.png
+Glowstone,glowstone.png,171.765625,131.18359375,84.30078125,62.58415781106141,patterned,block_textures/glowstone.png
+Granite,polished_granite.png,154.1015625,106.84765625,89.2265625,21.730796746223362,solid,block_textures/polished_granite.png
+Gravel,gravel.png,131.93359375,127.4609375,126.50390625,17.030544248294373,solid,block_textures/gravel.png
+Gray Concrete,light_gray_concrete_powder.png,154.890625,154.95703125,148.1875,9.848920478599917,solid,block_textures/light_gray_concrete_powder.png
+Gray Concrete Powder,light_gray_concrete_powder.png,154.890625,154.95703125,148.1875,9.848920478599917,solid,block_textures/light_gray_concrete_powder.png
+Gray Glazed Terracotta,gray_glazed_terracotta.png,83.09765625,90.30859375,93.6484375,33.06195960524835,patterned,block_textures/gray_glazed_terracotta.png
+Gray Terracotta,gray_terracotta.png,57.78515625,42.4140625,35.5625,1.0066567198741716,solid,block_textures/gray_terracotta.png
+Green Concrete,green_concrete_powder.png,97.1875,119.12109375,44.56640625,6.543453662546825,solid,block_textures/green_concrete_powder.png
+Green Concrete Powder,green_concrete_powder.png,97.1875,119.12109375,44.56640625,6.543453662546825,solid,block_textures/green_concrete_powder.png
+Green Glazed Terracotta,green_glazed_terracotta.png,117.015625,142.30859375,67.421875,49.71877152269561,patterned,block_textures/green_glazed_terracotta.png
+Green Terracotta,green_terracotta.png,76.0078125,83.2890625,42.3359375,1.4010422729709067,solid,block_textures/green_terracotta.png
+Green Wool,green_wool.png,84.83203125,109.53515625,27.50390625,7.675612642428702,solid,block_textures/green_wool.png
+Honey Block,honey_block_bottom.png,241.296875,146.0234375,17.91015625,15.410516177780735,solid,block_textures/honey_block_bottom.png
+Honeycomb Block,honeycomb_block.png,229.34765625,148.41015625,29.5390625,33.066453046860744,patterned,block_textures/honeycomb_block.png
+Ice,frosted_ice_0.png,140.24609375,181.19140625,252.70703125,9.952286853861663,solid,block_textures/frosted_ice_0.png
+Jukebox,jukebox_top.png,93.78125,64.4140625,47.3125,23.687683587887708,solid,block_textures/jukebox_top.png
+Jungle Leaves,jungle_leaves.png,109.0234375,107.19140625,99.84375,73.8988316331784,patterned,block_textures/jungle_leaves.png
+Jungle Log,jungle_log.png,85.21484375,67.98046875,25.1796875,11.864330334842109,solid,block_textures/jungle_log.png
+Jungle Planks,jungle_planks.png,160.44140625,115.19140625,80.79296875,23.568689660281677,solid,block_textures/jungle_planks.png
+Light Blue Terracotta,light_blue_terracotta.png,113.484375,108.53125,137.9921875,1.488419954151695,solid,block_textures/light_blue_terracotta.png
+Light Gray Terracotta,light_gray_terracotta.png,135.25390625,106.8828125,97.5,1.6238710519504729,solid,block_textures/light_gray_terracotta.png
+Lime Concrete,lime_concrete.png,94.08984375,168.8046875,24.5,0.9460869023938213,solid,block_textures/lime_concrete.png
+Lime Concrete Powder,lime_concrete_powder.png,125.38671875,189.2734375,41.90625,7.949151099716263,solid,block_textures/lime_concrete_powder.png
+Lime Glazed Terracotta,lime_glazed_terracotta.png,162.94921875,197.66796875,55.2109375,46.69626218312185,patterned,block_textures/lime_glazed_terracotta.png
+Lime Terracotta,lime_terracotta.png,103.53515625,117.67578125,52.796875,2.208146036679277,solid,block_textures/lime_terracotta.png
+Lodestone,lodestone_side.png,119.42578125,119.88671875,123.0390625,33.98459111976425,patterned,block_textures/lodestone_side.png
+Magenta Concrete,magenta_concrete.png,169.20703125,48.4765625,159.2109375,0.9468178140303277,solid,block_textures/magenta_concrete.png
+Magenta Concrete Powder,magenta_concrete_powder.png,192.7265625,83.80859375,184.63671875,10.248510296012704,solid,block_textures/magenta_concrete_powder.png
+Magenta Glazed Terracotta,magenta_glazed_terracotta.png,208.26953125,100.41796875,191.91015625,28.771502766821584,solid,block_textures/magenta_glazed_terracotta.png
+Magenta Stained Glass,magenta_stained_glass_pane_top.png,21.43359375,9.20703125,26.07421875,50.03882758672281,patterned,block_textures/magenta_stained_glass_pane_top.png
+Magenta Terracotta,magenta_terracotta.png,149.66796875,88.1015625,108.6796875,2.2038157979891433,solid,block_textures/magenta_terracotta.png
+Magenta Wool,magenta_wool.png,189.54296875,68.765625,179.91796875,12.927464047125042,solid,block_textures/magenta_wool.png
+Melon,melon_top.png,111.05078125,144.6796875,30.5078125,21.37960112809145,solid,block_textures/melon_top.png
+Moss Block,moss_block.png,89.078125,109.7265625,45.3984375,12.321879309093859,solid,block_textures/moss_block.png
+Mossy Cobblestone,mossy_cobblestone.png,110.109375,118.5,94.9375,27.69743207306998,solid,block_textures/mossy_cobblestone.png
+Mushroom Stem,mushroom_stem.png,203.19921875,196.640625,185.6015625,7.013828432139305,solid,block_textures/mushroom_stem.png
+Mycelium,mycelium_side.png,113.07421875,87.18359375,71.484375,28.162117227168693,solid,block_textures/mycelium_side.png
+Nether Bricks,chiseled_nether_bricks.png,47.4375,23.703125,28.19921875,10.796667147441292,solid,block_textures/chiseled_nether_bricks.png
+Netherrack,netherrack.png,97.58203125,38.4140625,38.4140625,13.80881958180788,solid,block_textures/netherrack.png
+Note Block,note_block.png,88.7578125,58.94921875,40.7890625,24.445419919231416,solid,block_textures/note_block.png
+Oak Leaves,dark_oak_leaves.png,105.46484375,105.55859375,105.46484375,73.08935559315655,patterned,block_textures/dark_oak_leaves.png
+Oak Planks,oak_planks.png,162.203125,130.8203125,78.62890625,23.598838546180545,solid,block_textures/oak_planks.png
+Observer,observer_side.png,70.1875,68.98828125,68.98828125,27.412027014154933,solid,block_textures/observer_side.png
+Obsidian,crying_obsidian.png,32.5859375,10.08203125,60.4453125,36.9294113255784,patterned,block_textures/crying_obsidian.png
+Orange Concrete Powder,orange_concrete_powder.png,227.28125,131.859375,31.91015625,10.121094199785288,solid,block_textures/orange_concrete_powder.png
+Orange Glazed Terracotta,orange_glazed_terracotta.png,154.77734375,147.48828125,91.96484375,75.82197374274583,patterned,block_textures/orange_glazed_terracotta.png
+Orange Stained Glass,orange_stained_glass.png,216.0,127.0,51.0,0.0,solid,block_textures/orange_stained_glass.png
+Orange Terracotta,orange_terracotta.png,161.59765625,83.87109375,37.671875,2.2089280780614455,solid,block_textures/orange_terracotta.png
+Orange Wool,orange_wool.png,240.65234375,118.078125,19.51171875,11.060264410294083,solid,block_textures/orange_wool.png
+Oxidized Copper,oxidized_copper.png,82.42578125,162.66796875,132.8671875,19.41457508444189,solid,block_textures/oxidized_copper.png
+Packed Ice,packed_ice.png,141.57421875,180.01171875,250.4921875,10.169657955484192,solid,block_textures/packed_ice.png
+Pink Concrete,pink_concrete_powder.png,228.859375,153.328125,181.0546875,12.278353303126673,solid,block_textures/pink_concrete_powder.png
+Pink Concrete Powder,pink_concrete_powder.png,228.859375,153.328125,181.0546875,12.278353303126673,solid,block_textures/pink_concrete_powder.png
+Pink Glazed Terracotta,pink_glazed_terracotta.png,235.15625,154.984375,181.5625,22.501744062457615,solid,block_textures/pink_glazed_terracotta.png
+Pink Terracotta,pink_terracotta.png,161.92578125,78.27734375,78.66796875,2.3044103834298575,solid,block_textures/pink_terracotta.png
+Podzol,podzol_top.png,91.7578125,63.23828125,24.0625,11.925214592375887,solid,block_textures/podzol_top.png
+Polished Andesite,polished_andesite.png,132.2578125,134.75390625,133.99609375,20.946703617141015,solid,block_textures/polished_andesite.png
+Polished Basalt,polished_basalt_side.png,88.51953125,88.24609375,91.51953125,22.687325704456253,solid,block_textures/polished_basalt_side.png
+Polished Blackstone,cracked_polished_blackstone_bricks.png,44.0390625,37.6171875,43.94140625,19.06051712982463,solid,block_textures/cracked_polished_blackstone_bricks.png
+Polished Blackstone Bricks,cracked_polished_blackstone_bricks.png,44.0390625,37.6171875,43.94140625,19.06051712982463,solid,block_textures/cracked_polished_blackstone_bricks.png
+Polished Diorite,polished_diorite.png,192.98046875,193.078125,194.55078125,33.92723012817691,patterned,block_textures/polished_diorite.png
+Polished Granite,polished_granite.png,154.1015625,106.84765625,89.2265625,21.730796746223362,solid,block_textures/polished_granite.png
+Polished Deepslate,polished_deepslate.png,72.4609375,72.578125,73.140625,20.192270147476677,solid,block_textures/polished_deepslate.png
+Powder Snow,powder_snow.png,248.140625,253.35546875,253.35546875,3.6812209054463914,solid,block_textures/powder_snow.png
+Prismarine,dark_prismarine.png,51.86328125,91.63671875,75.94921875,16.449324191819613,solid,block_textures/dark_prismarine.png
+Prismarine Bricks,prismarine_bricks.png,99.25,171.625,158.4296875,23.604945428351282,solid,block_textures/prismarine_bricks.png
+Pumpkin,pumpkin_top.png,198.1015625,118.734375,24.4609375,23.17830748013861,solid,block_textures/pumpkin_top.png
+Purple Concrete,purple_concrete_powder.png,131.921875,55.67578125,177.59765625,7.149414647785207,solid,block_textures/purple_concrete_powder.png
+Purple Concrete Powder,purple_concrete_powder.png,131.921875,55.67578125,177.59765625,7.149414647785207,solid,block_textures/purple_concrete_powder.png
+Purple Glazed Terracotta,purple_glazed_terracotta.png,109.87109375,48.0859375,152.4921875,38.103187774906196,patterned,block_textures/purple_glazed_terracotta.png
+Purple Stained Glass,purple_stained_glass.png,127.0,63.0,178.0,0.0,solid,block_textures/purple_stained_glass.png
+Purple Terracotta,purple_terracotta.png,118.4453125,70.26953125,86.08984375,2.300267384003125,solid,block_textures/purple_terracotta.png
+Purple Wool,purple_wool.png,121.875,42.2109375,172.5078125,11.578126723391685,solid,block_textures/purple_wool.png
+Purpur Block,purpur_block.png,169.91796875,125.91796875,169.6796875,17.072334395645015,solid,block_textures/purpur_block.png
+Purpur Pillar,purpur_pillar_top.png,171.80078125,128.36328125,171.4921875,16.533904143536137,solid,block_textures/purpur_pillar_top.png
+Quartz Bricks,quartz_bricks.png,234.7109375,229.17578125,221.76171875,7.869315751324312,solid,block_textures/quartz_bricks.png
+Quartz Pillar,quartz_pillar_top.png,235.11328125,229.8125,222.953125,7.920782603265754,solid,block_textures/quartz_pillar_top.png
+Red Concrete,red_concrete_powder.png,168.19921875,54.13671875,50.625,6.2678088810332335,solid,block_textures/red_concrete_powder.png
+Red Glazed Terracotta,red_glazed_terracotta.png,181.99609375,59.58203125,53.015625,25.032755353199832,solid,block_textures/red_glazed_terracotta.png
+Red Sandstone,red_sandstone_top.png,181.30859375,97.80859375,31.4609375,5.638357632438559,solid,block_textures/red_sandstone_top.png
+Red Terracotta,red_terracotta.png,143.109375,61.01953125,46.90625,2.151104817113412,solid,block_textures/red_terracotta.png
+Redstone Lamp,redstone_lamp_on.png,142.8515625,101.83984375,60.64453125,67.09806556891016,patterned,block_textures/redstone_lamp_on.png
+Redstone Ore,redstone_ore.png,140.44921875,109.59375,109.59375,38.86585673074767,patterned,block_textures/redstone_ore.png
+Respawn Anchor,respawn_anchor_side4.png,49.9765625,32.29296875,68.28125,47.3974723143543,patterned,block_textures/respawn_anchor_side4.png
+Rooted Dirt,rooted_dirt.png,144.01953125,103.5859375,76.51953125,27.13003404039306,solid,block_textures/rooted_dirt.png
+Sand,red_sandstone_top.png,181.30859375,97.80859375,31.4609375,5.638357632438559,solid,block_textures/red_sandstone_top.png
+Sandstone,red_sandstone_top.png,181.30859375,97.80859375,31.4609375,5.638357632438559,solid,block_textures/red_sandstone_top.png
+Scaffolding,scaffolding_side.png,126.1171875,109.171875,60.1171875,82.34737296723047,patterned,block_textures/scaffolding_side.png
+Sea Lantern,sea_lantern.png,172.2578125,199.89375,190.08984375,47.880995845519614,patterned,block_textures/sea_lantern.png
+Shroomlight,shroomlight.png,240.85546875,146.5390625,70.8828125,41.62320391343598,patterned,block_textures/shroomlight.png
+Shulker Box,purple_shulker_box.png,103.1640625,32.46484375,156.390625,10.812365873715478,solid,block_textures/purple_shulker_box.png
+Slime Block,slime_block.png,111.5703125,192.0,91.63671875,10.690609179692814,solid,block_textures/slime_block.png
+Smithing Table,smithing_table_side.png,55.26953125,35.45703125,35.9609375,20.13981596844145,solid,block_textures/smithing_table_side.png
+Smoker,smoker_front.png,87.953125,75.37890625,57.99609375,39.22086424629227,patterned,block_textures/smoker_front.png
+Smooth Basalt,smooth_basalt.png,72.67578125,72.29296875,78.20703125,15.86460301326487,solid,block_textures/smooth_basalt.png
+Smooth Stone,smooth_stone.png,158.6796875,158.6796875,158.6796875,18.02079250206116,solid,block_textures/smooth_stone.png
+Sponge,sponge.png,195.8515625,192.14453125,74.609375,16.076530614204763,solid,block_textures/sponge.png
+Spruce Leaves,spruce_leaves.png,78.8125,78.8125,78.8125,66.54037190871419,patterned,block_textures/spruce_leaves.png
+Spruce Log,stripped_spruce_log.png,115.6484375,89.96484375,52.44140625,6.629683495344945,solid,block_textures/stripped_spruce_log.png
+Spruce Planks,spruce_planks.png,114.91796875,84.84375,48.55859375,13.446066842671334,solid,block_textures/spruce_planks.png
+Stone,smooth_stone.png,158.6796875,158.6796875,158.6796875,18.02079250206116,solid,block_textures/smooth_stone.png
+Stone Bricks,cracked_polished_blackstone_bricks.png,44.0390625,37.6171875,43.94140625,19.06051712982463,solid,block_textures/cracked_polished_blackstone_bricks.png
+Stripped Crimson Stem,stripped_crimson_stem_top.png,121.73828125,56.3125,82.5859375,10.630429973006551,solid,block_textures/stripped_crimson_stem_top.png
+Stripped Warped Stem,stripped_warped_stem.png,57.5703125,150.92578125,147.77734375,9.447940735254921,solid,block_textures/stripped_warped_stem.png
+Terracotta,brown_terracotta.png,77.234375,51.1796875,35.703125,1.3236438241000217,solid,block_textures/brown_terracotta.png
+Tinted Glass,tinted_glass.png,43.50390625,38.9375,45.578125,9.751380240563307,solid,block_textures/tinted_glass.png
+TNT,tnt_top.png,142.71484375,62.16015625,53.796875,52.62668935493878,patterned,block_textures/tnt_top.png
+Tuff,tuff.png,108.05859375,109.140625,102.6328125,20.869258863186072,solid,block_textures/tuff.png
+Warped Nylium,warped_nylium.png,43.203125,114.34765625,101.2734375,23.57923364528368,solid,block_textures/warped_nylium.png
+Warped Planks,warped_planks.png,43.05078125,104.87109375,99.140625,23.77817006895374,solid,block_textures/warped_planks.png
+Warped Stem,warped_stem_top.png,53.34765625,109.66015625,110.14453125,26.372908750911183,solid,block_textures/warped_stem_top.png
+Weathered Copper,weathered_copper.png,108.296875,153.00390625,110.359375,18.860822284720218,solid,block_textures/weathered_copper.png
+Weathered Cut Copper,weathered_cut_copper.png,109.37109375,145.3671875,107.53125,21.443050690736527,solid,block_textures/weathered_cut_copper.png
+Wet Sponge,wet_sponge.png,171.09375,181.2109375,70.4375,17.398438760059957,solid,block_textures/wet_sponge.png
+White Concrete,white_concrete.png,207.109375,213.078125,214.07421875,0.8171982912392055,solid,block_textures/white_concrete.png
+White Concrete Powder,white_concrete_powder.png,225.7265625,227.4921875,227.83984375,8.279121525361175,solid,block_textures/white_concrete_powder.png
+White Glazed Terracotta,white_glazed_terracotta.png,188.5,212.49609375,202.89453125,67.55174644192726,patterned,block_textures/white_glazed_terracotta.png
+White Terracotta,white_terracotta.png,209.63671875,178.03515625,161.34765625,1.9028446535266443,solid,block_textures/white_terracotta.png
+White Wool,white_wool.png,233.58984375,236.296875,236.7734375,12.594034947709035,solid,block_textures/white_wool.png
+Yellow Concrete,yellow_concrete_powder.png,232.88671875,199.17578125,54.76953125,10.007560989489223,solid,block_textures/yellow_concrete_powder.png
+Yellow Concrete Powder,yellow_concrete_powder.png,232.88671875,199.17578125,54.76953125,10.007560989489223,solid,block_textures/yellow_concrete_powder.png
+Yellow Glazed Terracotta,yellow_glazed_terracotta.png,234.34765625,192.3203125,88.7109375,46.49537125423836,patterned,block_textures/yellow_glazed_terracotta.png
+Yellow Stained Glass,yellow_stained_glass.png,229.0,229.0,51.0,0.0,solid,block_textures/yellow_stained_glass.png
+Yellow Terracotta,yellow_terracotta.png,186.26953125,133.140625,35.36328125,2.1636518391454937,solid,block_textures/yellow_terracotta.png
+Yellow Wool,yellow_wool.png,248.78125,197.9609375,39.6328125,9.256243488509403,solid,block_textures/yellow_wool.png
