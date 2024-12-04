@@ -93,37 +93,62 @@ class CameraApp:
 
     def create_widgets(self):
         # Colors
-        background = "#ee0b0b"
-        background_light = "#0bee3f"
-        button_color = "#717af0"
+        background = "#0e101a"
+        background_light = "#14142d"
+        button_color = "#1f1f33"
         button_fg = "black"
 
         # Header
         header_frame = Frame(self.root, height=50, bg=background)
         header_frame.pack(side="top", fill="x")
 
+        # Header content
         Label(
             header_frame,
             text="Auto Photo App",
             font=("Helvetica", 18, "bold"),
             bg=background,
             fg="white",
-        ).pack(side="left", padx=20)
+        ).pack(side="left", padx=20, pady=5)
 
-        # Face Count Label
-
-        self.face_count_var.set(f"Faces Detected: {self.face_count}")
-        face_count_label = Label(
-            root, textvariable=self.face_count_var, font=("Arial", 16)
+        # Icons for face and peace sign counts
+        self.face_icon_label = Label(
+            header_frame,
+            text="👤",  # Face icon
+            font=("Arial", 16),
+            bg=background,
+            fg="white",
         )
-        face_count_label.pack()
+        self.face_icon_label.pack(side="left", padx=10)
 
-        # Peace Sign Count Label
-        peace_sign_label = Label(
-            root, textvariable=self.peace_sign_count_var, font=("Arial", 16)
+        self.face_count_var.set(f"{self.face_count}")
+        self.face_count_label = Label(
+            header_frame,
+            textvariable=self.face_count_var,
+            font=("Arial", 16),
+            bg=background,
+            fg="white",
         )
-        peace_sign_label.pack()
-        self.peace_sign_count_var.set(f"Peace Signs Detected: {self.peace_sign_count}")
+        self.face_count_label.pack(side="left")
+
+        self.peace_icon_label = Label(
+            header_frame,
+            text="✌️",  # Peace sign icon
+            font=("Arial", 16),
+            bg=background,
+            fg="white",
+        )
+        self.peace_icon_label.pack(side="left", padx=10)
+
+        self.peace_sign_count_var.set(f"{self.peace_sign_count}")
+        self.peace_sign_count_label = Label(
+            header_frame,
+            textvariable=self.peace_sign_count_var,
+            font=("Arial", 16),
+            bg=background,
+            fg="white",
+        )
+        self.peace_sign_count_label.pack(side="left")
 
         # Main Content
         main_frame = Frame(self.root)
@@ -264,29 +289,29 @@ class CameraApp:
                 face_results = face_detection.process(rgb_frame)
 
                 # Update face count
-                if face_results.detections:
-                    self.face_count = len(face_results.detections)
-                    self.face_count_var.set(f"Faces Detected: {self.face_count}")
-                else:
-                    self.face_count = 0
-                    self.face_count_var.set(f"No Faces Detected")
+                new_face_count = (
+                    len(face_results.detections) if face_results.detections else 0
+                )
+                if new_face_count != self.face_count:
+                    self.face_count = new_face_count
+                    self.face_count_var.set(f"{self.face_count}")
 
                 # Perform hand detection and update peace sign count
                 hand_results = hands.process(rgb_frame)
-                self.peace_sign_count = 0
+                new_peace_sign_count = 0
 
                 if hand_results.multi_hand_landmarks:
                     for hand_landmarks in hand_results.multi_hand_landmarks:
                         try:
                             gesture = recognize_gesture(hand_landmarks)
                             if gesture == "Peace Sign":
-                                self.peace_sign_count += 1
+                                new_peace_sign_count += 1
                         except AttributeError as e:
                             print("Error recognizing gesture:", e)
 
-                self.peace_sign_count_var.set(
-                    f"Peace Signs Detected: {self.peace_sign_count}"
-                )
+                if new_peace_sign_count != self.peace_sign_count:
+                    self.peace_sign_count = new_peace_sign_count
+                    self.peace_sign_count_var.set(f"{self.peace_sign_count}")
 
                 # Auto take photo
                 if self.peace_sign_count == self.face_count and self.face_count > 0:
