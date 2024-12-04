@@ -62,6 +62,10 @@ class CameraApp:
         self.peace_sign_count = 0
         self.peace_sign_count_var = tk.StringVar()
 
+        self.draw_detections = True
+
+        self.raw_frame = None
+
         # Match tracking variables
         self.match_start_time = None  # When the match started
         self.match_duration_required = 1  # Time in seconds to confirm match
@@ -99,10 +103,9 @@ class CameraApp:
         button_fg = "black"
 
         # Header
-        header_frame = Frame(self.root, height=50, bg=background)
+        header_frame = Frame(self.root, height=50, bg=background, bd=0, relief="flat")
         header_frame.pack(side="top", fill="x")
 
-        # Header content
         Label(
             header_frame,
             text="Auto Photo App",
@@ -111,51 +114,63 @@ class CameraApp:
             fg="white",
         ).pack(side="left", padx=20, pady=5)
 
-        # Icons for face and peace sign counts
+        # Face and Peace Sign Counts
+        count_frame = Frame(header_frame, bg=background)
+        count_frame.pack(side="right", padx=20)
+
+        # Icons and counts
         self.face_icon_label = Label(
-            header_frame,
+            count_frame,
             text="👤",  # Face icon
             font=("Arial", 16),
             bg=background,
             fg="white",
         )
-        self.face_icon_label.pack(side="left", padx=10)
+        self.face_icon_label.pack(side="left")
 
-        self.face_count_var.set(f"{self.face_count}")
         self.face_count_label = Label(
-            header_frame,
+            count_frame,
+            text="0",
             textvariable=self.face_count_var,
             font=("Arial", 16),
             bg=background,
             fg="white",
         )
-        self.face_count_label.pack(side="left")
+        self.face_count_label.pack(side="left", padx=2)
+
+        # Spacer
+        spacer = Label(
+            count_frame,
+            text="",
+            bg=background,
+        )
+        spacer.pack(side="left", padx=10)
 
         self.peace_icon_label = Label(
-            header_frame,
-            text="✌️",  # Peace sign icon
+            count_frame,
+            text="✌️",
             font=("Arial", 16),
             bg=background,
             fg="white",
         )
-        self.peace_icon_label.pack(side="left", padx=10)
+        self.peace_icon_label.pack(side="left", padx=2)
 
-        self.peace_sign_count_var.set(f"{self.peace_sign_count}")
         self.peace_sign_count_label = Label(
-            header_frame,
+            count_frame,
+            text="0",
             textvariable=self.peace_sign_count_var,
             font=("Arial", 16),
             bg=background,
             fg="white",
         )
-        self.peace_sign_count_label.pack(side="left")
+        self.peace_sign_count_label.pack(side="left", padx=2)
 
         # Main Content
-        main_frame = Frame(self.root)
+        main_frame = Frame(self.root, bg=background, bd=0, relief="flat")
         main_frame.pack(side="top", fill="both", expand=True)
 
         # Left Column (Buttons + Scrollable Area)
-        left_frame = Frame(main_frame, width=200, bg=background)
+        left_frame = Frame(main_frame, width=200, bg=background, bd=0, relief="flat")
         left_frame.pack(side="left", fill="y")
 
         # Camera Button
@@ -167,13 +182,22 @@ class CameraApp:
             bg=background_light,
             fg=button_fg,
             font=("Helvetica", 12),
+            bd=0,  # No border
+            relief="flat",  # Flat style
         ).pack(pady=10, padx=10)
 
         # Scrollable Area for Photos
-        self.canvas = Canvas(left_frame, bg=background)
-        self.scrollable_frame = Frame(self.canvas, bg=background)
+        self.canvas = Canvas(
+            left_frame, bg=background, bd=0, relief="flat", highlightthickness=0
+        )
+        self.scrollable_frame = Frame(self.canvas, bg=background, bd=0, relief="flat")
         self.scrollbar = Scrollbar(
-            left_frame, orient="vertical", command=self.canvas.yview, bg=background
+            left_frame,
+            orient="vertical",
+            command=self.canvas.yview,
+            bg=background,
+            bd=0,
+            relief="flat",
         )
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
 
@@ -190,10 +214,10 @@ class CameraApp:
         )
 
         # Right Column (Video Feed)
-        video_frame = Frame(main_frame, bg=background)
+        video_frame = Frame(main_frame, bg=background, bd=0, relief="flat")
         video_frame.pack(side="left", fill="both", expand=True)
 
-        self.video_panel = Label(video_frame, bg=background)
+        self.video_panel = Label(video_frame, bg=background, bd=0, relief="flat")
         self.video_panel.pack(fill="both", expand=True)
 
         # Take Picture Button
@@ -205,6 +229,8 @@ class CameraApp:
             bg=button_color,
             fg=button_fg,
             font=("Helvetica", 12),
+            bd=0,  # No border
+            relief="flat",  # Flat style
         ).pack(pady=10)
 
     def _on_mouse_wheel(self, event):
@@ -217,12 +243,13 @@ class CameraApp:
 
     def take_picture(self):
         if self.current_frame is not None:
+            raw_frame = self.raw_frame
             timestamp = time.strftime("%Y%m%d-%H%M%S")
             if not os.path.exists("photos"):
                 os.mkdir("photos")
 
             filename = f"photos/photo_{timestamp}.jpg"
-            cv2.imwrite(filename, self.current_frame)
+            cv2.imwrite(filename, raw_frame)
             print(f"Picture saved as {filename}")
 
             # Add the photo path to the list
@@ -234,7 +261,7 @@ class CameraApp:
     def add_thumbnail(self, image_path):
         # Resize image to thumbnail size
         img = Image.open(image_path)
-        img.thumbnail((150, 150))
+        img.thumbnail((200, 200))
 
         img_tk = ImageTk.PhotoImage(img)
 
@@ -245,7 +272,7 @@ class CameraApp:
             relief="flat",
         )
         thumbnail_label.image = img_tk  # Keep a reference to avoid garbage collection
-        thumbnail_label.pack(pady=5, padx=5)
+        thumbnail_label.pack(pady=5, padx=45)
 
         # Bind click event to display the full image
         thumbnail_label.bind(
@@ -282,6 +309,9 @@ class CameraApp:
                 # Flip the frame horizontally
                 frame = cv2.flip(frame, 1)
 
+                # Store the raw frame
+                self.raw_frame = frame.copy()
+
                 # Convert the frame to RGB
                 rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
@@ -296,12 +326,24 @@ class CameraApp:
                     self.face_count = new_face_count
                     self.face_count_var.set(f"{self.face_count}")
 
+                # Draw face
+                if face_results.detections and self.draw_detections:
+                    for detection in face_results.detections:
+                        mp_drawing.draw_detection(frame, detection)
+
                 # Perform hand detection and update peace sign count
                 hand_results = hands.process(rgb_frame)
                 new_peace_sign_count = 0
 
                 if hand_results.multi_hand_landmarks:
                     for hand_landmarks in hand_results.multi_hand_landmarks:
+                        # Draw landmarks
+                        if self.draw_detections:
+                            mp_drawing.draw_landmarks(
+                                frame, hand_landmarks, mp_hands.HAND_CONNECTIONS
+                            )
+
+                        # Recognize gesture
                         try:
                             gesture = recognize_gesture(hand_landmarks)
                             if gesture == "Peace Sign":
