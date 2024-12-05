@@ -67,6 +67,8 @@ class CameraApp:
         self.face_count_var = tk.StringVar()
         self.peace_sign_count = 0
         self.peace_sign_count_var = tk.StringVar()
+        self.face_count_var.set("0")
+        self.peace_sign_count_var.set("0")
 
         self.draw_detections = True
 
@@ -89,7 +91,7 @@ class CameraApp:
         self.hog = cv2.HOGDescriptor()
         self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
-        self.size = (640, 360)
+        self.size = (1280, 720)
 
         # Flags and data
         self.running = True
@@ -116,17 +118,29 @@ class CameraApp:
         header_frame = Frame(self.root, height=50, bg=background, bd=0, relief="flat")
         header_frame.pack(side="top", fill="x")
 
+        # Quit Button (top right)
+        Button(
+            header_frame,
+            text="❌",
+            command=self.quit_app,
+            bg="#ff4d4d",
+            fg="white",
+            font=("Helvetica", 14, "bold"),
+            bd=0,
+            relief="flat",
+        ).pack(side="right", padx=20, pady=10)
+
         Label(
             header_frame,
             text="Auto Photo App",
             font=("Helvetica", 18, "bold"),
             bg=background,
-            fg="white",
+            relief="flat",
         ).pack(side="left", padx=20, pady=5)
 
         # Face and Peace Sign Counts
         count_frame = Frame(header_frame, bg=background)
-        count_frame.pack(side="right", padx=20)
+        count_frame.pack(side="top", padx=20, pady=10)
 
         # Icons and counts
         self.face_icon_label = Label(
@@ -188,7 +202,7 @@ class CameraApp:
             left_frame,
             text="Camera",
             command=self.switch_to_camera,
-            width=20,
+            width=15,
             bg=background_light,
             fg=button_fg,
             font=("Helvetica", 12),
@@ -364,7 +378,7 @@ class CameraApp:
             command=lambda: show_image(raw_path),
             bg="#1f1f33",
             fg="black",
-            font=("Helvetica", 10),
+            font=("Helvetica", 25),
         ).pack(side="left", padx=5)
 
         # Filter Buttons
@@ -375,7 +389,7 @@ class CameraApp:
                 command=lambda path=filter_path: show_image(path),
                 bg="#1f1f33",
                 fg="black",
-                font=("Helvetica", 10),
+                font=("Helvetica", 25),
             ).pack(side="left", padx=5)
 
     def quit_app(self):
