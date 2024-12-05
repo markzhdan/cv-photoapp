@@ -55,6 +55,16 @@ def recognize_gesture(hand_landmarks):
 
     if index_up and middle_up and not ring_up and not pinky_up and not thumb_up:
         return "Peace Sign"
+    elif thumb_up and not index_up and not middle_up and not ring_up and not pinky_up:
+        return "Thumbs Up"
+    elif (
+        not thumb_up and not index_up and not middle_up and not ring_up and not pinky_up
+    ):
+        return "Fist"
+    elif thumb_up and index_up and middle_up and ring_up and pinky_up:
+        return "Open Hand"
+    elif index_up and not middle_up and not ring_up and not pinky_up and not thumb_up:
+        return "Pointing Gesture"
     else:
         return "Unknown Gesture"
 
@@ -476,13 +486,9 @@ class CameraApp:
                 new_peace_sign_count = 0
 
                 if hand_results.multi_hand_landmarks:
-                    for hand_landmarks in hand_results.multi_hand_landmarks:
-                        # Draw landmarks
-                        if self.draw_detections:
-                            mp_drawing.draw_landmarks(
-                                frame, hand_landmarks, mp_hands.HAND_CONNECTIONS
-                            )
-
+                    for idx, hand_landmarks in enumerate(
+                        hand_results.multi_hand_landmarks
+                    ):
                         # Compute hand centroid
                         x = int(
                             hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x
@@ -504,16 +510,58 @@ class CameraApp:
                             cv2.putText(
                                 frame,
                                 "Associated",
-                                (hand[0] - 20, hand[1] - 10),
+                                (hand[0] - 50, hand[1] - 30),
                                 cv2.FONT_HERSHEY_SIMPLEX,
                                 0.5,
                                 (255, 0, 0),
                                 2,
                             )
 
+                        # Draw landmarks
+                        if self.draw_detections:
+                            mp_drawing.draw_landmarks(
+                                frame, hand_landmarks, mp_hands.HAND_CONNECTIONS
+                            )
+
+                        # Get wrist coordinates for positioning text
+                        wrist_x = int(
+                            hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x
+                            * frame.shape[1]
+                        )
+                        wrist_y = int(
+                            hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y
+                            * frame.shape[0]
+                        )
+
+                        # Determine hand type
+                        hand_type = (
+                            "Left"
+                            if hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x
+                            < 0.5
+                            else "Right"
+                        )
+                        cv2.putText(
+                            frame,
+                            f"{hand_type} Hand",
+                            (wrist_x - 50, wrist_y - 50),
+                            cv2.FONT_HERSHEY_SIMPLEX,
+                            0.6,
+                            (0, 0, 255),
+                            2,
+                        )
+
                         # Recognize gesture
                         try:
                             gesture = recognize_gesture(hand_landmarks)
+                            cv2.putText(
+                                frame,
+                                f"Gesture: {gesture}",
+                                (wrist_x - 50, wrist_y - 80),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.6,
+                                (0, 255, 0),
+                                2,
+                            )
                             if gesture == "Peace Sign":
                                 new_peace_sign_count += 1
                         except AttributeError as e:
