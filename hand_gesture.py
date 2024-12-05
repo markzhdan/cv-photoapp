@@ -6,9 +6,15 @@ from tkinter import Frame, Button, Label, Canvas, Scrollbar
 from PIL import Image, ImageTk
 import threading
 import time
+import os
+import math
 
 # Initialize MediaPipe hands and drawing utilities
 mp_hands = mp.solutions.hands
+mp_drawing = mp.solutions.drawing_utils
+
+# Initialize Mediapipe face and drawing utilities
+mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
 # Function to recognize basic gestures
@@ -45,11 +51,35 @@ def recognize_gesture(hand_landmarks):
     else:
         return "Unknown Gesture"
 
+def get_centroid(box):
+    x, y, w, h = box
+    return x + w // 2, y + h // 2
+
+def euclidean_distance(pt1, pt2):
+    return math.sqrt((pt1[0] - pt2[0]) ** 2 + (pt1[1] - pt2[1]) ** 2)
+
+def associate_hands(hand_centroids, face_centroids, threshold):
+    hand_face_associations = []
+    for hand in hand_centroids:
+        closest_face = None
+        min_distance = float('inf')
+        for face in face_centroids:
+            distance = euclidean_distance(hand, face)
+            if distance < min_distance and distance < threshold:
+                min_distance = distance
+                closest_face = face
+        if closest_face:
+            hand_face_associations.append((hand, closest_face))
+    return hand_face_associations
+
+
 class CameraApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Auto Photo App")
         self.root.geometry("800x500")
+        self.face_count = 0
+        self.face_count_var = tk.StringVar()
 
         # Video capture and processing
         self.cap = cv2.VideoCapture(0)
@@ -90,6 +120,12 @@ class CameraApp:
             bg=background,
             fg="white",
         ).pack(side="left", padx=20)
+
+        # Face Count Label
+
+        self.face_count_var.set(f"Faces Detected: {self.face_count}")
+        face_count_label = Label(root, textvariable=self.face_count_var, font=("Arial", 16))
+        face_count_label.pack()
 
         # Main Content
         main_frame = Frame(self.root)
@@ -159,6 +195,9 @@ class CameraApp:
     def take_picture(self):
         if self.current_frame is not None:
             timestamp = time.strftime("%Y%m%d-%H%M%S")
+            if not os.path.exists("photos"):
+                os.mkdir("photos")
+
             filename = f"photos/photo_{timestamp}.jpg"
             cv2.imwrite(filename, self.current_frame)
             print(f"Picture saved as {filename}")
@@ -207,6 +246,9 @@ class CameraApp:
 
     def process_video(self):
         hands = mp_hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.7)
+        face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.7)
+        prox_threshold = 700
+
         while self.running:
             if not self.displaying_image:
                 ret, frame = self.cap.read()
@@ -222,15 +264,62 @@ class CameraApp:
                 # Perform hand detection
                 results = hands.process(rgb_frame)
 
+                # Perform face detection
+                face_results = face_detection.process(rgb_frame)
+
+                face_centroids = []
+                hand_centroids = []
+
+                if face_results.detections:
+                    self.face_count = len(face_results.detections)
+                    self.face_count_var.set(f"Faces Detected: {self.face_count}")
+
+                    for detection in face_results.detections:
+                        mp_drawing.draw_detection(frame, detection)
+                        bbox = detection.location_data.relative_bounding_box
+                        ih, iw, _ = frame.shape
+                        x = int(bbox.xmin * iw)
+                        y = int(bbox.ymin * ih)
+                        w = int(bbox.width * iw)
+                        h = int(bbox.height * ih)
+                        face_centroids.append(get_centroid((x, y, w, h)))
+                else:
+                    self.face_count_var.set(f"No Faces Detected")
+
+                #cv2.putText(frame, f"Faces: {self.face_count}", (100, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
                 # Draw hand landmarks on the frame
                 if results.multi_hand_landmarks:
                     for hand_landmarks in results.multi_hand_landmarks:
+
+                        # draw hand landmarks
                         mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+                        # Compute hand centroid
+                        x = int(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x * frame.shape[1])
+                        y = int(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y * frame.shape[0])
+                        hand_centroids.append((x, y))
 
                         # Determine left or right hand
                         hand_type = "Left" if hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x < 0.5 else "Right"
                         cv2.putText(frame, f"{hand_type} Hand", (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                        print("Hand landmarks detected:", hand_landmarks)
+
+                        # Associate hands with faces
+                        hand_face_associations = associate_hands(hand_centroids, face_centroids, prox_threshold)
+
+                        # Draw associations - remove when app is almost ready
+                        for hand, face in hand_face_associations:
+                            cv2.line(frame, hand, face, (50, 255, 0), 2)
+                            cv2.putText(
+                                frame,
+                                "Associated",
+                                (hand[0] - 20, hand[1] - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.5,
+                                (255, 0, 0),
+                                2,
+                            )
+
                         try:
                             # Recognize gestures
                             gesture = recognize_gesture(hand_landmarks)
@@ -239,8 +328,9 @@ class CameraApp:
                             print("Error recognizing gesture:", e)
                             gesture = "Unknown Gesture"
 
+
                 else:
-                    cv2.putText(frame, "No Hands Detected", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                    self.face_count_var.set("No Faces Detected")
 
                 # Store the current frame for capturing
                 self.current_frame = frame.copy()
@@ -261,6 +351,8 @@ class CameraApp:
                 # Update video panel
                 self.video_panel.imgtk = imgtk
                 self.video_panel.configure(image=imgtk)
+
+
 
 
 if __name__ == "__main__":
