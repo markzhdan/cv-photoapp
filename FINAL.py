@@ -62,7 +62,7 @@ class CameraApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Auto Photo App")
-        self.root.geometry("800x500")
+        self.root.geometry("1600x1000")
         self.face_count = 0
         self.face_count_var = tk.StringVar()
         self.peace_sign_count = 0
