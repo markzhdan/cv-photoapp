@@ -7,6 +7,7 @@ from PIL import Image, ImageTk
 import threading
 import time
 import os
+import math
 
 from filters import (
     pencil_sketch,
@@ -56,6 +57,30 @@ def recognize_gesture(hand_landmarks):
         return "Peace Sign"
     else:
         return "Unknown Gesture"
+
+
+def get_centroid(box):
+    x, y, w, h = box
+    return x + w // 2, y + h // 2
+
+
+def euclidean_distance(pt1, pt2):
+    return math.sqrt((pt1[0] - pt2[0]) ** 2 + (pt1[1] - pt2[1]) ** 2)
+
+
+def associate_hands(hand_centroids, face_centroids, threshold):
+    hand_face_associations = []
+    for hand in hand_centroids:
+        closest_face = None
+        min_distance = float("inf")
+        for face in face_centroids:
+            distance = euclidean_distance(hand, face)
+            if distance < min_distance and distance < threshold:
+                min_distance = distance
+                closest_face = face
+        if closest_face:
+            hand_face_associations.append((hand, closest_face))
+    return hand_face_associations
 
 
 class CameraApp:
@@ -403,6 +428,7 @@ class CameraApp:
             min_detection_confidence=0.7, min_tracking_confidence=0.7
         )
         face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.8)
+        prox_threshold = 700
 
         while self.running:
             if not self.displaying_image:
@@ -430,10 +456,20 @@ class CameraApp:
                     self.face_count = new_face_count
                     self.face_count_var.set(f"{self.face_count}")
 
+                face_centroids = []
+                hand_centroids = []
+
                 # Draw face
                 if face_results.detections and self.draw_detections:
                     for detection in face_results.detections:
                         mp_drawing.draw_detection(frame, detection)
+                        bbox = detection.location_data.relative_bounding_box
+                        ih, iw, _ = frame.shape
+                        x = int(bbox.xmin * iw)
+                        y = int(bbox.ymin * ih)
+                        w = int(bbox.width * iw)
+                        h = int(bbox.height * ih)
+                        face_centroids.append(get_centroid((x, y, w, h)))
 
                 # Perform hand detection and update peace sign count
                 hand_results = hands.process(rgb_frame)
@@ -445,6 +481,34 @@ class CameraApp:
                         if self.draw_detections:
                             mp_drawing.draw_landmarks(
                                 frame, hand_landmarks, mp_hands.HAND_CONNECTIONS
+                            )
+
+                        # Compute hand centroid
+                        x = int(
+                            hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x
+                            * frame.shape[1]
+                        )
+                        y = int(
+                            hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y
+                            * frame.shape[0]
+                        )
+                        hand_centroids.append((x, y))
+
+                        hand_face_associations = associate_hands(
+                            hand_centroids, face_centroids, prox_threshold
+                        )
+
+                        # Draw associations
+                        for hand, face in hand_face_associations:
+                            cv2.line(frame, hand, face, (50, 255, 0), 2)
+                            cv2.putText(
+                                frame,
+                                "Associated",
+                                (hand[0] - 20, hand[1] - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.5,
+                                (255, 0, 0),
+                                2,
                             )
 
                         # Recognize gesture
