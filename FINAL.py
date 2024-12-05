@@ -256,8 +256,22 @@ class CameraApp:
                 self.button_frame.destroy()
                 self.button_frame = None
 
+    def apply_filters_to_image(self, raw_frame, timestamp, filter_filenames):
+        for i, filter_func in enumerate(self.filters):
+            filtered_image = filter_func(raw_frame)
+            filter_filename = f"photos/photo_{timestamp}_filter_{i+1}.jpg"
+            cv2.imwrite(filter_filename, filtered_image)
+            filter_filenames.append(filter_filename)
+            print(f"Filtered photo saved as {filter_filename}")
+
+        # Update photo paths with filtered images
+        print("All filters applied for the photo.")
+
     def take_picture(self):
         if self.current_frame is not None:
+            # Trigger flash
+            self.flash_opacity = 255
+
             # Use the raw frame for saving
             raw_frame = self.raw_frame  # Unannotated frame stored in process_video
             timestamp = time.strftime("%Y%m%d-%H%M%S")
@@ -268,20 +282,19 @@ class CameraApp:
             cv2.imwrite(raw_filename, raw_frame)
             print(f"Raw photo saved as {raw_filename}")
 
-            # Save filtered images
+            # Add the photo path to the list (filters will be added later)
             filter_filenames = []
-            for i, filter_func in enumerate(self.filters):
-                filtered_image = filter_func(raw_frame)
-                filter_filename = f"photos/photo_{timestamp}_filter_{i+1}.jpg"
-                cv2.imwrite(filter_filename, filtered_image)
-                filter_filenames.append(filter_filename)
-                print(f"Filtered photo saved as {filter_filename}")
-
-            # Add the photo path to the list
             self.photo_paths.append((raw_filename, filter_filenames))
 
             # Display the thumbnail in the scrollable area
             self.add_thumbnail((raw_filename, filter_filenames))
+
+            # Start a thread to apply filters
+            threading.Thread(
+                target=self.apply_filters_to_image,
+                args=(raw_frame, timestamp, filter_filenames),
+                daemon=True,
+            ).start()
 
     def apply_filters(self, frame):
         def minecraft_mosaic(frame):
@@ -444,8 +457,6 @@ class CameraApp:
                         # Face and peace sign counts match for required duration
                         self.take_picture()
                         self.match_start_time = None
-                        # Trigger flash
-                        self.flash_opacity = 255
                 else:
                     self.match_start_time = None
 
