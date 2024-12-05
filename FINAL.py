@@ -8,6 +8,12 @@ import threading
 import time
 import os
 
+from filters import (
+    pencil_sketch,
+    super_neon_glow_with_gradient,
+    pixelated_minecraft_mosaic,
+)
+
 # Initialize MediaPipe hands and drawing utilities
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
@@ -65,6 +71,10 @@ class CameraApp:
         self.draw_detections = True
 
         self.raw_frame = None
+
+        self.filters = self.apply_filters(self.raw_frame)
+
+        self.button_frame = None
 
         # Match tracking variables
         self.match_start_time = None  # When the match started
@@ -241,26 +251,56 @@ class CameraApp:
             self.displaying_image = False
             print("Switched back to camera view.")
 
+            # Remove the filter buttons
+            if self.button_frame:
+                self.button_frame.destroy()
+                self.button_frame = None
+
     def take_picture(self):
         if self.current_frame is not None:
-            raw_frame = self.raw_frame
+            # Use the raw frame for saving
+            raw_frame = self.raw_frame  # Unannotated frame stored in process_video
             timestamp = time.strftime("%Y%m%d-%H%M%S")
             if not os.path.exists("photos"):
                 os.mkdir("photos")
 
-            filename = f"photos/photo_{timestamp}.jpg"
-            cv2.imwrite(filename, raw_frame)
-            print(f"Picture saved as {filename}")
+            raw_filename = f"photos/photo_{timestamp}_raw.jpg"
+            cv2.imwrite(raw_filename, raw_frame)
+            print(f"Raw photo saved as {raw_filename}")
+
+            # Save filtered images
+            filter_filenames = []
+            for i, filter_func in enumerate(self.filters):
+                filtered_image = filter_func(raw_frame)
+                filter_filename = f"photos/photo_{timestamp}_filter_{i+1}.jpg"
+                cv2.imwrite(filter_filename, filtered_image)
+                filter_filenames.append(filter_filename)
+                print(f"Filtered photo saved as {filter_filename}")
 
             # Add the photo path to the list
-            self.photo_paths.append(filename)
+            self.photo_paths.append((raw_filename, filter_filenames))
 
             # Display the thumbnail in the scrollable area
-            self.add_thumbnail(filename)
+            self.add_thumbnail((raw_filename, filter_filenames))
 
-    def add_thumbnail(self, image_path):
-        # Resize image to thumbnail size
-        img = Image.open(image_path)
+    def apply_filters(self, frame):
+        def minecraft_mosaic(frame):
+            csv_path = "block_data.csv"
+            return pixelated_minecraft_mosaic(frame, block_size=32, csv_path=csv_path)
+
+        return [
+            pencil_sketch,
+            super_neon_glow_with_gradient,
+            minecraft_mosaic,
+        ]
+
+    def add_thumbnail(self, image_paths):
+        raw_path, filtered_paths = (
+            image_paths  # Ensure both raw and filtered paths are passed
+        )
+
+        # Resize the raw image for the thumbnail
+        img = Image.open(raw_path)
         img.thumbnail((200, 200))
 
         img_tk = ImageTk.PhotoImage(img)
@@ -276,17 +316,54 @@ class CameraApp:
 
         # Bind click event to display the full image
         thumbnail_label.bind(
-            "<Button-1>", lambda e: self.display_full_image(image_path)
+            "<Button-1>", lambda e: self.display_full_image(image_paths)
         )
 
-    def display_full_image(self, image_path):
+    def display_full_image(self, image_paths):
+        raw_path, filtered_paths = image_paths
+
         self.displaying_image = True
-        img = Image.open(image_path)
-        img = img.resize((self.size[0], self.size[1]), Image.Resampling.LANCZOS)
-        img_tk = ImageTk.PhotoImage(img)
-        self.video_panel.imgtk = img_tk
-        self.video_panel.configure(image=img_tk)
-        print(f"Displaying full image: {image_path}")
+
+        def show_image(image_path):
+            img = Image.open(image_path)
+            img = img.resize((self.size[0], self.size[1]), Image.Resampling.LANCZOS)
+            img_tk = ImageTk.PhotoImage(img)
+            self.video_panel.imgtk = img_tk
+            self.video_panel.configure(image=img_tk)
+
+        # Display the raw image by default
+        show_image(raw_path)
+
+        filter_names = ["✏️", "✨", "🪵"]
+
+        # Remove any existing button frame
+        if self.button_frame:
+            self.button_frame.destroy()
+
+        # Create a new button frame for filter buttons
+        self.button_frame = Frame(self.video_panel, bg="#0e101a")
+        self.button_frame.place(relx=0.5, rely=0.05, anchor="n")
+
+        # Raw Image Button
+        Button(
+            self.button_frame,
+            text="🌄",
+            command=lambda: show_image(raw_path),
+            bg="#1f1f33",
+            fg="black",
+            font=("Helvetica", 10),
+        ).pack(side="left", padx=5)
+
+        # Filter Buttons
+        for filter_name, filter_path in zip(filter_names, filtered_paths):
+            Button(
+                self.button_frame,
+                text=filter_name,
+                command=lambda path=filter_path: show_image(path),
+                bg="#1f1f33",
+                fg="black",
+                font=("Helvetica", 10),
+            ).pack(side="left", padx=5)
 
     def quit_app(self):
         self.running = False

@@ -13,48 +13,6 @@ def pencil_sketch(image):
     return cv2.cvtColor(sketch, cv2.COLOR_GRAY2BGR)
 
 
-# https://medium.com/dataseries/designing-image-filters-using-opencv-like-abode-photoshop-express-part-2-4479f99fb35
-# 3. Comic Book Effect
-def comic_effect(img):
-    edges1 = cv2.bitwise_not(
-        cv2.Canny(img, 100, 200)
-    )  # for thin edges and inverting the mask obatined
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    gray = cv2.medianBlur(gray, 5)  # applying median blur with kernel size of 5
-    edges2 = cv2.adaptiveThreshold(
-        gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 7, 7
-    )  # thick edges
-    dst = cv2.edgePreservingFilter(
-        img, flags=2, sigma_s=64, sigma_r=0.25
-    )  # you can also use bilateral filter but that is slow
-    # flag = 1 for RECURS_FILTER (Recursive Filtering) and 2 for  NORMCONV_FILTER (Normalized Convolution). NORMCONV_FILTER produces sharpening of the edges but is slower.
-    # sigma_s controls the size of the neighborhood. Range 1 - 200
-    # sigma_r controls the how dissimilar colors within the neighborhood will be averaged. A larger sigma_r results in large regions of constant color. Range 0 - 1
-    cartoon1 = cv2.bitwise_and(
-        dst, dst, mask=edges1
-    )  # adding thin edges to smoothened image
-    cartoon2 = cv2.bitwise_and(dst, dst, mask=edges2)
-
-    return cartoon2
-
-
-# 8. Neon Glow Effect
-def neon_glow(image):
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray, 100, 200)
-
-    # Dilate the edges to make them bolder
-    edges_dilated = cv2.dilate(edges, np.ones((3, 3), np.uint8), iterations=1)
-
-    # Create a neon-colored overlay
-    neon = np.zeros_like(image)
-    neon[edges_dilated > 0] = [255, 0, 255]  # Neon pink
-
-    # Blend the neon edges with the original image
-    glow = cv2.addWeighted(image, 0.7, neon, 0.3, 0)
-    return glow
-
-
 def super_neon_glow_with_gradient(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 100, 200)
@@ -200,34 +158,3 @@ def pixelated_minecraft_mosaic(image, block_size, csv_path):
             output[y : y + block_height, x : x + block_width] = texture_resized
 
     return output
-
-
-# Main Program
-if __name__ == "__main__":
-    input_image = cv2.imread("sample.jpg")
-
-    print("Apply glow gradient")
-    neon_super_gradient = super_neon_glow_with_gradient(input_image)
-    cv2.imwrite("filtered_photos/neon.jpg", neon_super_gradient)
-    cv2.imshow("Super Neon Glow with Gradient Effect", neon_super_gradient)
-
-    print("Apply pencil")
-    sketch = pencil_sketch(input_image)
-    cv2.imwrite("filtered_photos/pencil.jpg", sketch)
-    cv2.imshow("Pencil Sketch Effect", sketch)
-
-    print("Apply comic")
-    comic = comic_effect(input_image)
-    cv2.imwrite("filtered_photos/comic.jpg", comic)
-    cv2.imshow("Comic Effect", comic)
-
-    print("Apply Minecraft")
-    pixelated = pixelated_image(input_image, 32)
-    minecraft_mosaic = pixelated_minecraft_mosaic(input_image, 32, "block_data.csv")
-    cv2.imwrite("filtered_photos/minecraft.jpg", minecraft_mosaic)
-    cv2.imshow("Minecraft Block Effect", minecraft_mosaic)
-
-    print("Finished")
-
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
